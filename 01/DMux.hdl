@@ -1,0 +1,27 @@
+// This file is part of www.nand2tetris.org
+// and the book "The Elements of Computing Systems"
+// by Nisan and Schocken, MIT Press.
+// File name: projects/01/DMux.hdl
+
+/**
+ * Demultiplexor:
+ * [a, b]= [in, 0] if sel == 0
+ *          [0, in] if sel == 1
+ */
+
+CHIP DMux {
+    IN in, sel;
+    OUT a, b;
+
+    PARTS:
+    // Put your code here:
+    // Nand(a=sel, b=sel, out=nS);
+    // Mux(a=in, b=false, sel=sel, out=a);
+    // Mux(a=false, b=in, sel=sel, out=b);
+
+    And(a=sel, b=in, out=b);
+    Nand(a=sel, b=sel, out=nS);
+    And(a=nS, b=in, out=a);
+
+    // each output is just and of the kmap result for that output and data in
+}
