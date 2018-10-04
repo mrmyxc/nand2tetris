@@ -17,4 +17,19 @@ CHIP DMux8Way {
 
     PARTS:
     // Put your code here:
+    Or(a=sel[0], b=false, out=S0);
+    Or(a=sel[1], b=false, out=S1);
+    Or(a=sel[2], b=false, out=S2);
+    Not(in=sel[0], out=nS0);
+    Not(in=sel[1], out=nS1);
+    Not(in=sel[2], out=nS2);
+
+    And4Way(a=in,b=nS2,c=nS1,d=nS0,out=a);
+    And4Way(a=in,b=nS2,c=nS1,d=S0,out=b);
+    And4Way(a=in,b=nS2,c=S1,d=nS0,out=c);
+    And4Way(a=in,b=nS2,c=S1,d=S0,out=d);
+    And4Way(a=in,b=S2,c=nS1,d=nS0,out=e);
+    And4Way(a=in,b=S2,c=nS1,d=S0,out=f);
+    And4Way(a=in,b=S2,c=S1,d=nS0,out=g);
+    And4Way(a=in,b=S2,c=S1,d=S0,out=h);
 }

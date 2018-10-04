@@ -17,4 +17,32 @@ CHIP Mux4Way16 {
 
     PARTS:
     // Put your code here:
+    // A.S0'.S1' + B.S0'.S1 + C.S0.S1' + D.S0.S1
+    // A.S0'.S1' + B.S0.S1' + C.S0'.S1 + D.S0.S1
+    // with nands
+    // ( (A.S0'.S1')' . (B.S0'.S1)' . (C.S0.S1')' . (D.S0.S1)' )'
+    Not(in=sel[0], out=nS0);
+    Not(in=sel[1], out=nS1);
+
+    Widen16(in=sel[0], out=S016);
+    Widen16(in=sel[1], out=S116);
+    Widen16(in=nS0, out=nS016);
+    Widen16(in=nS1, out=nS116);
+
+    And16(a=a, b=nS016, out=aAndnSel0);
+    And16(a=aAndnSel0, b=nS116, out=outa);
+    
+    And16(a=b, b=S016, out=bAndSel0);
+    And16(a=bAndSel0, b=nS116, out=outb);
+
+    And16(a=c, b=S116, out=cAndSel1);
+    And16(a=cAndSel1, b=nS016, out=outc);
+
+    And16(a=d, b=S116, out=dAndSel1);
+    And16(a=dAndSel1, b=S016, out=outd);
+
+    Or16(a=outa, b=outb, out=outOr1);
+    Or16(a=outOr1, b=outc, out=outOr2);
+    Or16(a=outOr2, b=outd, out=out);
+
 }

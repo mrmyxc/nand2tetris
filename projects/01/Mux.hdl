@@ -24,12 +24,20 @@ CHIP Mux {
     // Or(a=bASel, b=aAnotSel, out=outOr);
     // Or(a=outOr, b=aAndB, out=out);
 
-    // there is an optimisation with 1 less nand gate but idk how to do simply this exp
+    // there is an optimisation with 1 less nand gate but idk how to do simplify this exp
     // A.B + B.S + A.S'
-    Nand(a=b, b=b, out=notB);
-    Nand(a=notB, b=sel, out=nBNandS);
-    Nand(a=a, b=nBNandS, out=nandOutput1);
-    Nand(a=sel, b=b, out=bNandS);
-    Nand(a=nandOutput1, b=bNandS, out=out);
+
+    // actual exp is A.S' + B.S
+
+    // Nand(a=b, b=b, out=notB);
+    // Nand(a=notB, b=sel, out=nBNandS);
+    // Nand(a=a, b=nBNandS, out=nandOutput1);
+    // Nand(a=sel, b=b, out=bNandS);
+    // Nand(a=nandOutput1, b=bNandS, out=out);
     
+    Nand(a=sel, b=sel, out=nSel);
+    Nand(a=b, b=sel, out=bNandS);
+    Nand(a=a, b=nSel, out=aNandnS);
+    Nand(a=bNandS, b=aNandnS, out=out);
+
 }

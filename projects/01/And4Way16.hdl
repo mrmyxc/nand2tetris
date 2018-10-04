@@ -1,0 +1,15 @@
+// This file is part of www.nand2tetris.org
+// and the book "The Elements of Computing Systems"
+// by Nisan and Schocken, MIT Press.
+// File name: projects/01/Mux4Way16.hdl
+
+CHIP And4Way16 {
+    IN a[16], b[16], c[16], d[16];
+    OUT out[16];
+
+    PARTS:
+    And16(a=a, b=b, out=aAndb);
+    And16(a=aAndb, b=c, out=aAndbAndc);
+    And16(a=aAndbAndc, b=d, out=out);
+
+}

@@ -11,6 +11,16 @@
  *       h if sel == 111
  */
 
+// S2  S1  S0 
+// 0   0   0    A
+// 0   0   1    B
+// 0   1   0    C
+// 0   1   1    D
+// 1   0   0    E
+// 1   0   1    F
+// 1   1   0    G
+// 1   1   1    H
+
 CHIP Mux8Way16 {
     IN a[16], b[16], c[16], d[16],
        e[16], f[16], g[16], h[16],
@@ -19,4 +29,49 @@ CHIP Mux8Way16 {
 
     PARTS:
     // Put your code here:
+    Not(in=sel[0], out=nS0);
+    Not(in=sel[1], out=nS1);
+    Not(in=sel[2], out=nS2);
+
+    Widen16(in=sel[0], out=S016);
+    Widen16(in=sel[1], out=S116);
+    Widen16(in=sel[2], out=S216);
+    Widen16(in=nS0, out=nS016);
+    Widen16(in=nS1, out=nS116);
+    Widen16(in=nS2, out=nS216);
+
+    And4Way16( a=a, b=nS016, c=nS116, d=nS216, out=outa);
+    And4Way16( a=b, b=S016, c=nS116, d=nS216, out=outb);
+    And4Way16( a=c, b=nS016, c=S116, d=nS216, out=outc);
+    And4Way16( a=d, b=S016, c=S116, d=nS216, out=outd);
+    And4Way16( a=e, b=nS016, c=nS116, d=S216, out=oute);
+    And4Way16( a=f, b=S016, c=nS116, d=S216, out=outf);
+    And4Way16( a=g, b=nS016, c=S116, d=S216, out=outg);
+    And4Way16( a=h, b=S016, c=S116, d=S216, out=outh);
+
+    // And16(a=a, b=nS016, out=aAndnSel0);
+    // And16(a=aAndnSel0, b=nS216, out=aAndnSel0nSel2);
+    // And16(a=aAndnSel0nSel2, b=nS116, out=outa);
+    
+    // And16(a=b, b=S016, out=bAndSel0);
+    // And16(a=bAndSel0, b=nS216, out=bAndSel0AndnSel2);
+    // And16(a=bAndSel0AndnSel2, b=nS116, out=outb);
+
+    // And16(a=c, b=S116, out=cAndSel1);
+    // And16(a=cAndSel1, b=nS216, out=cAndSel1AndnSel2);
+    // And16(a=cAndSel1AndnSel2, b=nS016, out=outc);
+
+    // And16(a=d, b=S116, out=dAndSel1);
+    // And16(a=dAndSel1, b=nS216, out=dAndSel1AndnSel2);
+    // And16(a=dAndSel1AndnSel2, b=S016, out=outd);
+
+    Or16(a=outa, b=outb, out=outOr1);
+    Or16(a=outOr1, b=outc, out=outOr2);
+    Or16(a=outOr2, b=outd, out=outOr3);
+    Or16(a=outOr3, b=oute, out=outOr4);
+    Or16(a=outOr4, b=outf, out=outOr5);
+    Or16(a=outOr5, b=outg, out=outOr6);
+    Or16(a=outOr6, b=outh, out=out);
+    
+
 }

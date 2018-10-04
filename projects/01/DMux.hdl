@@ -23,5 +23,5 @@ CHIP DMux {
     Nand(a=sel, b=sel, out=nS);
     And(a=nS, b=in, out=a);
 
-    // each output is just and of the kmap result for that output and data in
+    // each output is just and of the kmap result(sel) for that output and data in
 }
