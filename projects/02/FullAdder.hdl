@@ -14,4 +14,34 @@ CHIP FullAdder {
 
     PARTS:
     // Put you code here:
+    HalfAdder(a=a, b=b, sum=sum1, carry=carry1);
+    HalfAdder(a=c, b=sum1, sum=sum, carry=carry2);
+    Or(a=carry1, b=carry2, out=carry);
+
+    // Xor(a=a, b=b, out=sum1);
+    // Xor(a=sum1, b=c, out=sum);
+    // And(a=a, b=b, out=carry1);
+    // And(a=sum1, b=c, out=carry2);
+    // Or(a=carry1, b=carry2, out=carry);
+
+    // Not(in=a, out=nA);
+    // Not(in=b, out=nB);
+    // Not(in=c, out=nC);
+
+    // Nand(a=nB, b=c, out=nBC);
+    // Nand(a=b, b=nC, out=bnC);
+    // Nand(a=nBC, b=bnC, out=X);
+    // Nand(a=b, b=c, out=bC);
+    // Nand(a=nB, b=nC, out=nBnC);
+    // Nand(a=bC, b=nBnC, out=Y);
+
+
+    // Nand(a=nA, b=X, out=nAX);
+    // Nand(a=a, b=Y, out=AY);
+
+    // Nand(a=nAX, b=AY, out=sum);
+
+    // Nand(a=a, b=nBnC, out=AnBnC);
+    // Nand(a=bC, b=AnBnC, out=carry);
+
 }
