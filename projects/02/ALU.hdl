@@ -43,4 +43,28 @@ CHIP ALU {
 
     PARTS:
    // Put you code here:
+   Mux16(a=x, b=false, sel=zx, out=zxOutFlag);
+   Not16(in=zxOutFlag, out=nzxOutFlag);
+   Mux16(a=zxOutFlag, b=nzxOutFlag, sel=nx, out=nxOutFlag);
+
+   Mux16(a=y, b=false, sel=zy, out=zyOutFlag);
+   Not16(in=zyOutFlag, out=nzyOutFlag);
+   Mux16(a=zyOutFlag, b=nzyOutFlag, sel=ny, out=nyOutFlag);
+
+   Add16(a=nxOutFlag, b=nyOutFlag, out=xyAdd);
+   And16(a=nxOutFlag, b=nyOutFlag, out=xyAnd);
+   Mux16(a=xyAnd, b=xyAdd, sel=f, out=fFlag);
+
+   Not16(in=fFlag, out=noFlag);
+   Mux16(a=fFlag, b=noFlag, sel=no, out=tempOut);
+
+   // return out. need to do to use tempOut in another gate
+   Or16(a=false, b=tempOut, out=out);
+
+   And161(a=tempOut, b=true, out=ng);
+
+   // will only return 0 if all bits are 0
+   Or16Way(in=tempOut, out=nzr);
+   Not(in=nzr, out=zr);
+
 }

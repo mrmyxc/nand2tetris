@@ -1,0 +1,20 @@
+// This file is part of www.nand2tetris.org
+// and the book "The Elements of Computing Systems"
+// by Nisan and Schocken, MIT Press.
+// File name: projects/01/Or8Way.hdl
+
+/**
+ * 8-way Or: 
+ * out = (in[0] or in[1] or ... or in[7])
+ */
+
+CHIP And161 {
+    IN a[16], b;
+    OUT out;
+
+    PARTS:
+    // Put your code here:
+    // MSG is signed bit. return MSB
+    And(a=a[15], b=b, out=out);
+
+}
